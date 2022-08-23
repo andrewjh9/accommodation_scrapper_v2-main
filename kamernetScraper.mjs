@@ -213,7 +213,6 @@ async function getList(url, div , attr , page){
       let titles = document.querySelectorAll(div)
       let titleLinks = [];
       for (let index = 0; index < titles.length; index++) {
-        await delay(function(){}, 300);
         if(attr){
           titleLinks.push(titles[index].getAttribute(attr))
         }
