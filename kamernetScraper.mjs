@@ -73,10 +73,10 @@ const PREF_SIZE_OF_TEXT = 800;
 
 
 export default async function kamernetScrapper(headless){
-  const width=1024, height=1600;
 	const browser = await puppeteer.launch({headless: headless, 'defaultViewport' : { 'width' : width, 'height' : height }});
-  await page.setViewport( { 'width' : width, 'height' : height } );
 	const page = await browser.newPage();
+  const width=1024, height=1600;
+  await page.setViewport( { 'width' : width, 'height' : height } );
   let pageCount = await getNumberOfPage(`https://kamernet.nl/en/for-rent/room-amsterdam`, page)
   await delay(function(){}, 300);
   await filterPage(page)
