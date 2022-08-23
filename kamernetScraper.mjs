@@ -178,7 +178,6 @@ async function getNumberOfPage(url, page){
       let paginationChild = pageinationParent.querySelectorAll('li')
       let pageCount = []
       paginationChild.forEach(element => {
-        await delay(function(){}, 300);
         pageCount.push(element.getAttribute('page'))
       });
       return Math.max(...pageCount)
