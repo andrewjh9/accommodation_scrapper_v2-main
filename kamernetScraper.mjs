@@ -1,8 +1,6 @@
  
-import createCsvWriter from 'csv-writer';
 import puppeteer from'puppeteer';
 import {franc, francAll} from 'franc';
-import csv from'csvtojson';
 import {delay} from './helper.mjs';
 
 // import nodemailer from'nodemailer';
