@@ -73,7 +73,6 @@ const PREF_SIZE_OF_TEXT = 800;
 
 
 export default async function kamernetScrapper(headless){
-  let previously_processed_links = await readCsv()
 	const browser = await puppeteer.launch({headless: headless});
 	const page = await browser.newPage();
   let pageCount = await getNumberOfPage(`https://kamernet.nl/en/for-rent/room-amsterdam`, page)
