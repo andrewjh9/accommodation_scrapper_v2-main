@@ -6,7 +6,7 @@ import schedule from'node-schedule';
 import dotenv from "dotenv";
 dotenv.config()
 
-const headless = true;
+const headless = false;
 schedule.scheduleJob('30 * * * * *', async function() {
     let newKamernetPosts, newRoomzPosts, failed = [];
     try{
