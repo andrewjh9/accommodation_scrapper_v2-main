@@ -101,7 +101,6 @@ export default async function kamernetScrapper(headless){
     }
   }
   let engPost = [];
-  let csvSave = [];
   for (let index = 0; index < fetchedText.length; index++) {
     const element = fetchedText[index];
     if(franc(element.desc) == 'eng' && !checkInput(element.desc, KEYWORDS_EXCLUDE)){
@@ -121,14 +120,6 @@ export default async function kamernetScrapper(headless){
         rating = rating + 2 ;
       }
 
-      //check not if in csv, if add to csv return true else return false
-
-      if(!previously_processed_links.includes(element.link)){
-        element.new = true
-        csvSave.push({link: element.link})
-      } else{ 
-        element.new = false
-      }
 
       engPost.push({link: element.link, rating: rating, new: element.new,  price: element.price, size: element.size, added: element.added, posKeywordsFound: posKeywordsFound})
     }
