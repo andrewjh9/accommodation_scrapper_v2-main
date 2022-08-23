@@ -65,7 +65,6 @@ async function filterPage(page){
 
 
 
-
 const KEYWORDS_POSITIVE = ["international",  "working"]
 const KEYWORDS_NEGATIVE = [""]
 const KEYWORDS_EXCLUDE = ["no registration"]
@@ -141,7 +140,6 @@ export default async function kamernetScrapper(headless){
   engPost.sort((a, b) => (a.rating > b.rating) ? -1 : 1)
   engPost.sort((a, b) => (a.new > b.rating) ? -1 : 1)
   return engPost;
-  writeToFile(formatText(engPost), "postings")
 };
 
 function checkInput(input, words) {
@@ -149,27 +147,7 @@ function checkInput(input, words) {
  }
 
 
-// Fix to run locally or deploy and run
-async function sendMail(body){
-  var transporter = nodemailer.createTransport(ses({
-    accessKeyId: process.env.accessKeyId,
-    secretAccessKey:  process.env.secretAccessKey,
-    region : "eu-west-1"
-  }));
-  transporter.sendMail({
-    from: 'accommodationscrapper@gmail.com',
-    to: 'andrew@heath.org',
-    subject: 'Accommodation Scapper',
-    html: body,
-    // ses: { // optional extra arguments for SendRawEmail
-    //     Tags: [{
-    //         Name: 'tag name',
-    //         Value: 'tag value'
-    //     }]
-    // }
-  });
 
-}
 async function keyWordRankerNeg(text, keywordsNegative ){
   let rank = 0;
   let keywords_found = []
@@ -231,28 +209,7 @@ async function getDiv(url, div, page){
   }
 }
 
-async function readCsv(){
-  let links =  await csv().fromFile("data.csv");
-  let linksArr = []
-  for(let link of links){
-    // const csv=require('csvtojson')
-    linksArr.push(link.Link)
-  }
-  return linksArr
-}
 
-
-async function checkAndSaveCsv(data){
-  const csvWriter = createCsvWriter.createObjectCsvWriter({
-    path: 'data.csv',
-    header: [
-      {id: 'link', title: 'Link'},
-    ]
-  });
-  csvWriter
-  .writeRecords(data)
-  .then(()=> console.log('The CSV file was written successfully'));
-}
 
 async function getList(url, div , attr , page){
   try{
@@ -277,8 +234,3 @@ async function getList(url, div , attr , page){
   }
 }
 
-function sleep(ms) {
-  return new Promise((resolve) => {
-    setTimeout(resolve, ms);
-  });
-}

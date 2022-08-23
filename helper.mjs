@@ -1,11 +1,15 @@
 
 import fs from 'fs';
+import nodemailer from 'nodemailer';
+import AWS from "aws-sdk";
 
 export function delay(time) {
     return new Promise(function(resolve) { 
         setTimeout(resolve, time)
     });
 }
+
+
 
 
 export function formatText(kamernetPosts, roofzPosts, failed){
@@ -73,4 +77,21 @@ export function writeToFile(content, fileName){
         }
     //file written successfully
     })
+}
+export async function sendMail(htmlBody){
+  AWS.config.update({
+    region: process.env.AWS_REGION  ,
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  });
+  const mailer = nodemailer.createTransport({
+    SES: new AWS.SES(),
+  });
+  await mailer.sendMail({
+    from:  process.env.FROMEMAIL,
+    to:  process.env.TOEMAIL,
+    subject: "Accomdation Bot found something!",
+    html: htmlBody,
+
+  });
 }
