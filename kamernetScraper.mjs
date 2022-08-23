@@ -90,7 +90,7 @@ export default async function kamernetScrapper(headless){
   let fetchedText = [];
   for(let index = 0; index <= roomLinks.length; index++) {
     let added = await getDiv(roomLinks[index], '.published-date', page);
-    if(added.includes("hours")){
+    if(added.includes("hours") && added.includes("1")){
       fetchedText.push({
         desc: await getDiv(roomLinks[index], '.room-description', page),
         link:roomLinks[index],
