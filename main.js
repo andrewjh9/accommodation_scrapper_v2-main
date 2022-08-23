@@ -24,7 +24,10 @@ schedule.scheduleJob('30 * * * * *', async function() {
         failed.push("RoomzPost");
         newRoomzPosts = [];
     }
-    await sendMail(formatText(newKamernetPosts, newRoomzPosts, failed));
+    if(newKamernetPosts == [] && newRoomzPosts == [] && failed == []){
+    } else { 
+        await sendMail(formatText(newKamernetPosts, newRoomzPosts, failed));
+    }
 });
 
 // childProcess.exec("powershell.exe [console]::beep(500,1000)");
