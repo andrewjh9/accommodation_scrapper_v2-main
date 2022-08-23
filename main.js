@@ -7,7 +7,7 @@ import dotenv from "dotenv";
 dotenv.config()
 
 const headless = true;
-schedule.scheduleJob('30 * * * * *', async function() {
+schedule.scheduleJob('* 1 * * *', async function() {
     let newKamernetPosts, newRoomzPosts, failed = [];
     try{
         newKamernetPosts = await kamernetScrapper(headless)
