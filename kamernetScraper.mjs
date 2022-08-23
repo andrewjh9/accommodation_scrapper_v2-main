@@ -78,8 +78,10 @@ export default async function kamernetScrapper(headless){
 	const page = await browser.newPage();
   await page.setViewport( { 'width' : width, 'height' : height } );
   let pageCount = await getNumberOfPage(`https://kamernet.nl/en/for-rent/room-amsterdam`, page)
+  console.log("DEBUG - finished getNumberOfPages");
   await delay(function(){}, 300);
   await filterPage(page)
+  console.log("DEBUG - finished filterPage");
   // pageCount = 1; //Used for testing new changes
   let roomLinks = [];
   for (let index = 1; index <= pageCount; index++) {
@@ -87,6 +89,8 @@ export default async function kamernetScrapper(headless){
     roomLinks.push.apply(roomLinks, roomlink);
     await delay(function(){}, 300);
   }
+  console.log("DEBUG - finished getList");
+
   // Get descriptions
   let fetchedText = [];
   for(let index = 0; index <= roomLinks.length; index++) {
@@ -102,6 +106,7 @@ export default async function kamernetScrapper(headless){
       await delay(function(){}, 300);
     }
   }
+  console.log("DEBUG - finished descriptions");
   let engPost = [];
   for (let index = 0; index < fetchedText.length; index++) {
     const element = fetchedText[index];
@@ -173,6 +178,7 @@ async function getNumberOfPage(url, page){
       let paginationChild = pageinationParent.querySelectorAll('li')
       let pageCount = []
       paginationChild.forEach(element => {
+        await delay(function(){}, 300);
         pageCount.push(element.getAttribute('page'))
       });
       return Math.max(...pageCount)
@@ -208,6 +214,7 @@ async function getList(url, div , attr , page){
       let titles = document.querySelectorAll(div)
       let titleLinks = [];
       for (let index = 0; index < titles.length; index++) {
+        await delay(function(){}, 300);
         if(attr){
           titleLinks.push(titles[index].getAttribute(attr))
         }
