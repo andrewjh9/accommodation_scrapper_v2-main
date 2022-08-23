@@ -13,12 +13,14 @@ schedule.scheduleJob('30 * * * * *', async function() {
         newKamernetPosts = await kamernetScrapper(headless)
     
     } catch(e){
+        console.log(e)
         failed.push("Kamernet");
         newKamernetPosts = [];
     }
     try { 
         newRoomzPosts = await roofzScraper(headless);
     } catch(e){
+        console.log(e)
         failed.push("RoomzPost");
         newRoomzPosts = [];
     }
