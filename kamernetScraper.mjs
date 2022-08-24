@@ -112,7 +112,6 @@ export default async function kamernetScrapper(headless){
         added: info.added
       })
     }
-    console.log(fetchedText)
     await delay(function(){}, 300);
   }
   console.log("DEBUG - finished descriptions");
