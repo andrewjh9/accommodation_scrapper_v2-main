@@ -101,17 +101,16 @@ export default async function kamernetScrapper(headless){
   // Get descriptions
   let fetchedText = [];
   for(let index = 0; index <= roomLinks.length; index++) {
-    let added = await getDiv(roomLinks[index], '.published-date', page);
-    // if(added.includes("hours")){
+    let info = await getRoomInfo(roomLinks[index], page)
+    // let added = await getDiv(roomLinks[index], '.published-date', page);
     fetchedText.push({
-      desc: await getDiv(roomLinks[index], '.room-description', page),
-      link:roomLinks[index],
-      price: await getDiv(roomLinks[index], '.price', page),
-      size: await getDiv(roomLinks[index], '.surface', page),
-      added: added
+      desc: info.desc,
+      link: roomLinks[index],
+      price: info.price,
+      size: info.size,
+      added: info.added
     })
     await delay(function(){}, 300);
-    // }
   }
   console.log("DEBUG - finished descriptions");
   let engPost = [];
@@ -119,20 +118,20 @@ export default async function kamernetScrapper(headless){
     const element = fetchedText[index];
     if(franc(element.desc) == 'eng' && !checkInput(element.desc, KEYWORDS_EXCLUDE) && !scrapedLinkArray.includes(element.link)){
 
-      let keywordRankerPosRes = await keyWordRankerPos(element.desc, KEYWORDS_POSITIVE)
-      let rating =+ keywordRankerPosRes.rank
+      // let keywordRankerPosRes = await keyWordRankerPos(element.desc, KEYWORDS_POSITIVE)
+      // let rating =+ keywordRankerPosRes.rank
 
-      let keywordRankerNegRes = await keyWordRankerNeg(element.desc, KEYWORDS_NEGATIVE)
-      rating =+ keywordRankerNegRes.rank
+      // let keywordRankerNegRes = await keyWordRankerNeg(element.desc, KEYWORDS_NEGATIVE)
+      // rating =+ keywordRankerNegRes.rank
 
 
-      let posKeywordsFound = keywordRankerPosRes.keywords_found
-      if(element.desc.length < MIN_SIZE_OF_TEXT){
-        rating = rating - 1 ;
-      }
-      if(element.desc.length >= PREF_SIZE_OF_TEXT){
-        rating = rating + 2 ;
-      }
+      // let posKeywordsFound = keywordRankerPosRes.keywords_found
+      // if(element.desc.length < MIN_SIZE_OF_TEXT){
+      //   rating = rating - 1 ;
+      // }
+      // if(element.desc.length >= PREF_SIZE_OF_TEXT){
+      //   rating = rating + 2 ;
+      // }
 
       scrapedLinkArray.push(element.link);
       engPost.push({link: element.link, rating: rating, new: element.new,  price: element.price, size: element.size, added: element.added, posKeywordsFound: posKeywordsFound})
@@ -196,6 +195,32 @@ async function getNumberOfPage(url, page){
     console.log(error)
   }
 }
+
+/*
+Needs refactoring badly !
+*/
+
+async function getRoomInfo(url, page){
+  let info;
+  try{
+    await page.goto(url);
+    await delay(function(){}, 300);
+    info = await page.evaluate(() =>{
+      added = (document.querySelector('.published-date')) ? document.querySelector('.published-date').textContent : "None";
+      price = (document.querySelector('.price')) ? document.querySelector('.price').textContent : "None";
+      size = (document.querySelector('.surface')) ? document.querySelector('.surface').textContent : "None";
+      desc = (document.querySelector('.room-description')) ? document.querySelector('.room-description').textContent : "None";
+      return {added: added, desc: desc, price: price, size: size};
+
+    });
+    return info;
+
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+
 
 async function getDiv(url, div, page){
   try{
