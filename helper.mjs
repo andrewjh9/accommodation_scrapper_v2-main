@@ -36,7 +36,7 @@ export function formatText(kamernetPosts, roofzPosts, failed){
         <tr ${(kamernetPost.new)?`style ="background-color: lightgreen"`:null}>
         <td>${kamernetPost.posKeywordsFound}</td>
         <td><a href=${kamernetPost.link}>Click Here</a></td>
-        <td>${kamernetPost.rating}</td> 
+        <td>n/a</td> 
         <td>${kamernetPost.price}</td>
         <td>${kamernetPost.size}</td>
         <td>${kamernetPost.added}</td>
