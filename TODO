@@ -1,2 +1,8 @@
 ROOFZ
 - Check the property is in Amsterdam
+
+Kamernet
+- Can still fail silently, ensure that any error trips the top level error message
+
+General 
+- use AWS lambda

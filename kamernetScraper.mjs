@@ -194,7 +194,7 @@ async function getNumberOfPage(url, page){
    return numberDiv;
 
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
 }
 
@@ -224,20 +224,20 @@ async function getRoomInfo(url, page){
 
 
 
-async function getDiv(url, div, page){
-  try{
-    if(url)
-    await page.goto(url);
-    let pageContent = await page.evaluate((url, div ) =>{
-      let titles = (document.querySelector(div))?document.querySelector(div).textContent : "None";
-      return titles
-    },url, div );
-    return pageContent;
+// async function getDiv(url, div, page){
+//   try{
+//     if(url)
+//     await page.goto(url);
+//     let pageContent = await page.evaluate((url, div ) =>{
+//       let titles = (document.querySelector(div))?document.querySelector(div).textContent : "None";
+//       return titles
+//     },url, div );
+//     return pageContent;
 
-  } catch (error) {
-    console.log(error)
-  }
-}
+//   } catch (error) {
+//     console.log(error)
+//   }
+// }
 
 
 
@@ -260,7 +260,7 @@ async function getList(url, div , attr , page){
     return pageContent;
 
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
 }
 

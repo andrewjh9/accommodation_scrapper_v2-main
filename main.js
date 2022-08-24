@@ -16,7 +16,6 @@ async function job(){
     let newKamernetPosts, newRoomzPosts, failed = [];
     try{
         newKamernetPosts = await kamernetScrapper(headless)
-    
     } catch(e){
         console.log(e)
         failed.push("Kamernet");
@@ -29,7 +28,7 @@ async function job(){
         failed.push("RoomzPost");
         newRoomzPosts = [];
     }
-    if(newKamernetPosts == [] && newRoomzPosts == [] && failed == []){
+    if(newKamernetPosts.length == 0 && newRoomzPosts.length == 0 && failed.length == 0){
         console.log("Nothing new found");
     } else { 
         console.log("Sending mail");
