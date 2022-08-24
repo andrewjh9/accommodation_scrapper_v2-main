@@ -103,13 +103,16 @@ export default async function kamernetScrapper(headless){
   for(let index = 0; index <= roomLinks.length; index++) {
     let info = await getRoomInfo(roomLinks[index], page)
     // let added = await getDiv(roomLinks[index], '.published-date', page);
-    fetchedText.push({
-      desc: info.desc,
-      link: roomLinks[index],
-      price: info.price,
-      size: info.size,
-      added: info.added
-    })
+    if(info){
+      fetchedText.push({
+        desc: info.desc,
+        link: roomLinks[index],
+        price: info.price,
+        size: info.size,
+        added: info.added
+      })
+    }
+    console.log(fetchedText)
     await delay(function(){}, 300);
   }
   console.log("DEBUG - finished descriptions");
@@ -210,7 +213,7 @@ async function getRoomInfo(url, page){
       price = (document.querySelector('.price')) ? document.querySelector('.price').textContent : "None";
       size = (document.querySelector('.surface')) ? document.querySelector('.surface').textContent : "None";
       desc = (document.querySelector('.room-description')) ? document.querySelector('.room-description').textContent : "None";
-      return {added: added, desc: desc, price: price, size: size};
+      return {"added": added, "desc": desc, "price": price, "size": size};
 
     });
     return info;
