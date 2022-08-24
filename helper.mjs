@@ -58,7 +58,19 @@ export function formatText(kamernetPosts, roofzPosts, failed){
       `
     }
     HTML = HTML + `</table></div>`
-    
+    HTML = HTML + `<div>
+    <h3>Apartment Reaction Info</h3>
+    <h4>Mobile Number</h4>
+    ${process.env.PHONE}
+    <h4>Apartment Reaction Text</h4>
+    Hello, my name is Andrew Heath. I moved to the Netherlands four years ago to study. I and have now finished studying and will be starting to work as a Data Engineer at Logex (in Amsterdam) on October 1st with a monthly salary of 3,500 euro (before tax). I will work primarily at the office and from home a couple of days a week.
+    I am a clean and respectful tenant and ADDRESS would be a great location for me as it is in cycle distance to where I will work. 
+    I hope you feel I am a good match for the apartment, I am available any time for a viewing.
+    Kind regards
+
+    Andrew Heath
+    </div>`
+
     return HTML;
   }
 
