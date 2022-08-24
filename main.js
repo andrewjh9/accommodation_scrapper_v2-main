@@ -8,7 +8,7 @@ dotenv.config()
 
 const headless = true;
 job();
-schedule.scheduleJob('* 1 * * *', async function() {
+schedule.scheduleJob("*/30 * * * *", async function() {
     job();
 });
 
@@ -30,7 +30,9 @@ async function job(){
         newRoomzPosts = [];
     }
     if(newKamernetPosts == [] && newRoomzPosts == [] && failed == []){
+        console.log("Nothing new found");
     } else { 
+        console.log("Sending mail");
         await sendMail(formatText(newKamernetPosts, newRoomzPosts, failed));
     }
 }

@@ -2,6 +2,10 @@
 import puppeteer from'puppeteer';
 import {franc, francAll} from 'franc';
 import {delay} from './helper.mjs';
+import fs from 'fs';
+const fsPromises = fs.promises;
+
+const KAMERNETPROPERTIESFILEPATH = "kamernetProperties.json";
 
 // import nodemailer from'nodemailer';
 
@@ -54,8 +58,8 @@ async function filterPage(page){
   // selector = 'input[name="OwnerTypeId"]';
   // await page.evaluate((selector) => document.querySelector(selector).click(), selector); //Filter for ad by roommate
   // await delay(400);
-  // page.click("#search-filter-total-results"); // Search based on filter
-  // await delay(4000);
+  page.click("#search-filter-total-results"); // Search based on filter
+  await delay(4000);
   // page.click("#txt-cta-center-modal-close-icon") //Close pop-up
   // await delay(4000);
    return page;
@@ -73,6 +77,8 @@ const PREF_SIZE_OF_TEXT = 800;
 
 
 export default async function kamernetScrapper(headless){
+  let scrapedLinkArray = []
+  scrapedLinkArray = await getReactedToProperties();
   const width=1024, height=1600;
 	const browser = await puppeteer.launch({headless: headless, 'defaultViewport' : { 'width' : width, 'height' : height }});
   await delay(function(){}, 300);
@@ -96,22 +102,22 @@ export default async function kamernetScrapper(headless){
   let fetchedText = [];
   for(let index = 0; index <= roomLinks.length; index++) {
     let added = await getDiv(roomLinks[index], '.published-date', page);
-    if(added.includes("hours")){
-      fetchedText.push({
-        desc: await getDiv(roomLinks[index], '.room-description', page),
-        link:roomLinks[index],
-        price: await getDiv(roomLinks[index], '.price', page),
-        size: await getDiv(roomLinks[index], '.surface', page),
-        added: added
-      })
-      await delay(function(){}, 300);
-    }
+    // if(added.includes("hours")){
+    fetchedText.push({
+      desc: await getDiv(roomLinks[index], '.room-description', page),
+      link:roomLinks[index],
+      price: await getDiv(roomLinks[index], '.price', page),
+      size: await getDiv(roomLinks[index], '.surface', page),
+      added: added
+    })
+    await delay(function(){}, 300);
+    // }
   }
   console.log("DEBUG - finished descriptions");
   let engPost = [];
   for (let index = 0; index < fetchedText.length; index++) {
     const element = fetchedText[index];
-    if(franc(element.desc) == 'eng' && !checkInput(element.desc, KEYWORDS_EXCLUDE)){
+    if(franc(element.desc) == 'eng' && !checkInput(element.desc, KEYWORDS_EXCLUDE) && !scrapedLinkArray.includes(element.link)){
 
       let keywordRankerPosRes = await keyWordRankerPos(element.desc, KEYWORDS_POSITIVE)
       let rating =+ keywordRankerPosRes.rank
@@ -128,13 +134,14 @@ export default async function kamernetScrapper(headless){
         rating = rating + 2 ;
       }
 
-
+      scrapedLinkArray.push(element.link);
       engPost.push({link: element.link, rating: rating, new: element.new,  price: element.price, size: element.size, added: element.added, posKeywordsFound: posKeywordsFound})
     }
   }
   await browser.close();
   engPost.sort((a, b) => (a.rating > b.rating) ? -1 : 1)
   engPost.sort((a, b) => (a.new > b.rating) ? -1 : 1)
+  await fsPromises.writeFile(KAMERNETPROPERTIESFILEPATH, JSON.stringify(scrapedLinkArray), 'utf8');
   return engPost;
 };
 
@@ -230,3 +237,16 @@ async function getList(url, div , attr , page){
   }
 }
 
+async function getReactedToProperties(){
+  return JSON.parse(await fsPromises.readFile(KAMERNETPROPERTIESFILEPATH, 'utf-8', (err, data) => {
+      const properties = []
+      if (err) {
+          throw err
+      }
+      if(!Object.entries(data).length === 0){
+          properties = JSON.parse(data.toString());
+      } else { 
+      }
+      return properties;
+  }));
+}
