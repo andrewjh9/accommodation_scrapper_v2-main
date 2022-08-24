@@ -7,7 +7,7 @@ import dotenv from "dotenv";
 dotenv.config()
 
 const headless = true;
-schedule.scheduleJob('* 1 * * *', async function() {
+// schedule.scheduleJob('* 1 * * *', async function() {
     let newKamernetPosts, newRoomzPosts, failed = [];
     try{
         newKamernetPosts = await kamernetScrapper(headless)
@@ -28,6 +28,6 @@ schedule.scheduleJob('* 1 * * *', async function() {
     } else { 
         await sendMail(formatText(newKamernetPosts, newRoomzPosts, failed));
     }
-});
+// });
 
 // childProcess.exec("powershell.exe [console]::beep(500,1000)");

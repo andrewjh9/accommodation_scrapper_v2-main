@@ -75,7 +75,8 @@ const PREF_SIZE_OF_TEXT = 800;
 export default async function kamernetScrapper(headless){
   const width=1024, height=1600;
 	const browser = await puppeteer.launch({headless: headless, 'defaultViewport' : { 'width' : width, 'height' : height }});
-	const page = await browser.newPage();
+  await delay(function(){}, 300);
+  const page = await browser.newPage();
   await page.setViewport( { 'width' : width, 'height' : height } );
   let pageCount = await getNumberOfPage(`https://kamernet.nl/en/for-rent/room-amsterdam`, page)
   console.log("DEBUG - finished getNumberOfPages");
@@ -95,7 +96,7 @@ export default async function kamernetScrapper(headless){
   let fetchedText = [];
   for(let index = 0; index <= roomLinks.length; index++) {
     let added = await getDiv(roomLinks[index], '.published-date', page);
-    if(added.includes("hours") && added.includes("1")){
+    if(added.includes("hours")){
       fetchedText.push({
         desc: await getDiv(roomLinks[index], '.room-description', page),
         link:roomLinks[index],
