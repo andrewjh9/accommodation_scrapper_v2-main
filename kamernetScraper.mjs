@@ -120,20 +120,20 @@ export default async function kamernetScrapper(headless){
     const element = fetchedText[index];
     if(franc(element.desc) == 'eng' && !checkInput(element.desc, KEYWORDS_EXCLUDE) && !scrapedLinkArray.includes(element.link)){
 
-      // let keywordRankerPosRes = await keyWordRankerPos(element.desc, KEYWORDS_POSITIVE)
-      // let rating =+ keywordRankerPosRes.rank
+      let keywordRankerPosRes = await keyWordRankerPos(element.desc, KEYWORDS_POSITIVE)
+      let rating =+ keywordRankerPosRes.rank
 
-      // let keywordRankerNegRes = await keyWordRankerNeg(element.desc, KEYWORDS_NEGATIVE)
-      // rating =+ keywordRankerNegRes.rank
+      let keywordRankerNegRes = await keyWordRankerNeg(element.desc, KEYWORDS_NEGATIVE)
+      rating =+ keywordRankerNegRes.rank
 
 
-      // let posKeywordsFound = keywordRankerPosRes.keywords_found
-      // if(element.desc.length < MIN_SIZE_OF_TEXT){
-      //   rating = rating - 1 ;
-      // }
-      // if(element.desc.length >= PREF_SIZE_OF_TEXT){
-      //   rating = rating + 2 ;
-      // }
+      let posKeywordsFound = keywordRankerPosRes.keywords_found
+      if(element.desc.length < MIN_SIZE_OF_TEXT){
+        rating = rating - 1 ;
+      }
+      if(element.desc.length >= PREF_SIZE_OF_TEXT){
+        rating = rating + 2 ;
+      }
 
       scrapedLinkArray.push(element.link);
       engPost.push({link: element.link, rating: rating, new: element.new,  price: element.price, size: element.size, added: element.added, posKeywordsFound: posKeywordsFound})
