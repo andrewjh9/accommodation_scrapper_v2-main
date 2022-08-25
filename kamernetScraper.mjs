@@ -38,7 +38,8 @@ async function filterPage(page){
         TODO Filter on on owner being a housemate !important
         Filter on rooms
     */
-   console.log("Filtering");
+   console.log("Filtering "+getDateTimeString());
+   await delay(400);
    page.click('#filters-selected-total-mobile');
    await delay(400);
    page.click("#roomDetails") // Open details
@@ -56,7 +57,7 @@ async function filterPage(page){
    selector = ".age-dropdown .select-dropdown";
    await page.evaluate((selector) => document.querySelector(selector).value = 23, selector); // Filter for Man
   await delay(400);
-  console.log("Age filtered");
+  console.log("Age filtered ");
 
 
   // page.click("#generalRoom")
@@ -89,7 +90,7 @@ export default async function kamernetScrapper(headless){
   const page = await browser.newPage();
   await page.setViewport( { 'width' : width, 'height' : height } );
   let pageCount = await getNumberOfPage(`https://kamernet.nl/en/for-rent/room-amsterdam`, page)
-  console.log("DEBUG - finished getNumberOfPages");
+  console.log("DEBUG - finished getNumberOfPages "+getDateTimeString());
   await delay(function(){}, 400);
   await filterPage(page)
   console.log("DEBUG - finished filterPage");
@@ -100,7 +101,7 @@ export default async function kamernetScrapper(headless){
     roomLinks.push.apply(roomLinks, roomlink);
     await delay(function(){}, 300);
   }
-  console.log("DEBUG - finished getList");
+  console.log("DEBUG - finished getList "+getDateTimeString());
 
   // Get descriptions
   let fetchedText = [];
@@ -118,11 +119,13 @@ export default async function kamernetScrapper(headless){
         })
       }
     } else{
-      console.log("URL undefined for room");
+      console.log("URL undefined for room link index: "+index);
+      console.log("length = "+roomLinks.length);
+
     }
     await delay(function(){}, 300);
   }
-  console.log("DEBUG - finished descriptions");
+  console.log("DEBUG - finished descriptions "+getDateTimeString());
   let engPost = [];
   for (let index = 0; index < fetchedText.length; index++) {
     const element = fetchedText[index];

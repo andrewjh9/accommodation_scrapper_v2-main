@@ -7,7 +7,7 @@ import dotenv from "dotenv";
 dotenv.config()
 // 0    0/5  10-20 * * ? 
 const headless = true;
-schedule.scheduleJob("0 0/5 10-20 * * ?", async function() {
+schedule.scheduleJob("0 0/5 10-22 * * ?", async function() {
     job();
 });
 
@@ -19,14 +19,14 @@ async function job(){
         newKamernetPosts = await kamernetScrapper(headless)
     } catch(e){
         console.log(e)
-        failed.push("Kamernet");
+        failed.push("Kamernet "+getDateTimeString());
         newKamernetPosts = [];
     }
     try { 
         newRoomzPosts = await roofzScraper(headless);
     } catch(e){
         console.log(e)
-        failed.push("RoomzPost");
+        failed.push("RoomzPost "+getDateTimeString());
         newRoomzPosts = [];
     }
     if(newKamernetPosts.length == 0 && newRoomzPosts.length == 0 && failed.length == 0){
