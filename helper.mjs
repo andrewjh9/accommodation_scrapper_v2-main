@@ -19,7 +19,7 @@ export function formatText(kamernetPosts, roofzPosts, failed){
     </head>
       <div>
       <h2>Accommodation Bot found something!</h2>
-      <h3 display=${(failed == [])? "none" : "block"} style ="background-color: red; color: white ">!Failed servies!:${failed}</h3> 
+      <h3 display=${(failed.length == 0)? "none" : "block"} style ="background-color: red; color: white ">!Failed servies!:${failed}</h3> 
       <h3>Kamernet</h3>
             <table style="width:95%; margin:auto">
             <tr>
@@ -107,3 +107,23 @@ export async function sendMail(htmlBody){
 
   });
 }
+
+export function getDateTimeString(){
+    var date = new Date();
+    let month = date.getMonth() + 1;
+    
+    // helper function
+    const addZeroIfNeeded = (num) => {
+        return (num < 10) ? '0' + num : num.toString();
+    }
+    
+    month = addZeroIfNeeded(month);
+    let day = addZeroIfNeeded(date.getDate());
+    
+    let year = date.getFullYear();
+    let hours = addZeroIfNeeded(date.getHours());
+    let mins = addZeroIfNeeded(date.getMinutes());
+    let seconds = addZeroIfNeeded(date.getSeconds());
+  
+    return `${year}-${month}-${day}T${hours}:${mins}:${seconds}`;
+  }
