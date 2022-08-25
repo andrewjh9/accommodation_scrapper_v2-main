@@ -6,7 +6,7 @@ import schedule from'node-schedule';
 import dotenv from "dotenv";
 dotenv.config()
 
-const headless = false;
+const headless = true;
 job();
 schedule.scheduleJob("*/30 * * * *", async function() {
     job();
