@@ -1,7 +1,7 @@
  
 import puppeteer from'puppeteer';
 import {franc, francAll} from 'franc';
-import {delay} from './helper.mjs';
+import {delay, getDateTimeString} from './helper.mjs';
 import fs from 'fs';
 const fsPromises = fs.promises;
 

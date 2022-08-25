@@ -11,3 +11,5 @@ Kamernet
 General 
 - Create a Linux service that runs node replacing the forever package which is breaking things
 - use AWS lambda
+- If it fails it shouldn't add them to the file
+- Adding to the file should happen after the email is sent
