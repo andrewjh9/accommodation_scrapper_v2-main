@@ -38,6 +38,7 @@ async function filterPage(page){
         TODO Filter on on owner being a housemate !important
         Filter on rooms
     */
+   console.log("Filtering");
    page.click('#filters-selected-total-mobile');
    await delay(400);
    page.click("#roomDetails") // Open details
@@ -50,10 +51,12 @@ async function filterPage(page){
    let selector = 'input[id="SuitableForGendersId_1"]';
    await page.evaluate((selector) => document.querySelector(selector).click(), selector); // Filter for Man
    await delay(400);
+   console.log("Gender filtered");
    await page.keyboard.type('23')
    selector = ".age-dropdown .select-dropdown";
    await page.evaluate((selector) => document.querySelector(selector).value = 23, selector); // Filter for Man
   await delay(400);
+  console.log("Age filtered");
 
 
   // page.click("#generalRoom")
@@ -87,7 +90,7 @@ export default async function kamernetScrapper(headless){
   await page.setViewport( { 'width' : width, 'height' : height } );
   let pageCount = await getNumberOfPage(`https://kamernet.nl/en/for-rent/room-amsterdam`, page)
   console.log("DEBUG - finished getNumberOfPages");
-  await delay(function(){}, 300);
+  await delay(function(){}, 400);
   await filterPage(page)
   console.log("DEBUG - finished filterPage");
   // pageCount = 1; //Used for testing new changes
