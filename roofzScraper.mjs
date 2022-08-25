@@ -64,15 +64,18 @@ async function getListings(page, listingLinks){
 
 async function getListing(page, listingLink){
     return await page.evaluate((ROOFPROPERTIESURL, listingLink) =>{
-        let publishDate = document.querySelectorAll('.project-summary')[0].innerText.split('Publish date ')[1];
-        let url = `${ROOFPROPERTIESURL}/${listingLink}`;
-        let address = listingLink;
-        return  {
-            key: address+"%"+publishDate,
-            address: address,
-            url: url,
-            publishDate: publishDate
-        };
+        if(document.querySelectorAll('.project-summary')[0]){
+            let publishDate = document.querySelectorAll('.project-summary')[0].innerText.split('Publish date ')[1];
+            let url = `${ROOFPROPERTIESURL}/${listingLink}`;
+            let address = listingLink;
+            return  {
+                key: address+"%"+publishDate,
+                address: address,
+                url: url,
+                publishDate: publishDate
+            };
+        } else { return {}}
+
     }, ROOFPROPERTIESURL, listingLink);
 }
 
