@@ -1,8 +1,13 @@
 ROOFZ
 - Check the property is in Amsterdam
 
+Holland2Stay
+- Add holland to stay alerts
+
 Kamernet
+- Add more fine grained filtering, checking for age
 - Can still fail silently, ensure that any error trips the top level error message
 
 General 
+- Create a Linux service that runs node replacing the forever package which is breaking things
 - use AWS lambda

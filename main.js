@@ -6,7 +6,7 @@ import schedule from'node-schedule';
 import dotenv from "dotenv";
 dotenv.config()
 
-const headless = true;
+const headless = false;
 job();
 schedule.scheduleJob("*/30 * * * *", async function() {
     job();
@@ -29,7 +29,7 @@ async function job(){
         newRoomzPosts = [];
     }
     if(newKamernetPosts.length == 0 && newRoomzPosts.length == 0 && failed.length == 0){
-        console.log("Nothing new found");
+        console.log("Nothing new found new email sent");
     } else { 
         console.log("Sending mail");
         await sendMail(formatText(newKamernetPosts, newRoomzPosts, failed));

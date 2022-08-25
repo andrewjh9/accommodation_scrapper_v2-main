@@ -46,11 +46,14 @@ async function filterPage(page){
   //  await delay(800);
   // Fail point is in here
    page.click("#suitableRoom") // Open sub menus
-
-  //  let selector = 'input[id="SuitableForGendersId_1"]';
-  //  await page.evaluate((selector) => document.querySelector(selector).click(), selector); // Filter for students
    await delay(400);
-  //  await delay(40000);
+   let selector = 'input[id="SuitableForGendersId_1"]';
+   await page.evaluate((selector) => document.querySelector(selector).click(), selector); // Filter for Man
+   await delay(400);
+   await page.keyboard.type('23')
+   selector = ".age-dropdown .select-dropdown";
+   await page.evaluate((selector) => document.querySelector(selector).value = 23, selector); // Filter for Man
+  await delay(400);
 
 
   // page.click("#generalRoom")
@@ -58,8 +61,6 @@ async function filterPage(page){
   // selector = 'input[name="OwnerTypeId"]';
   // await page.evaluate((selector) => document.querySelector(selector).click(), selector); //Filter for ad by roommate
   // await delay(400);
-  page.click("#search-filter-total-results"); // Search based on filter
-  await delay(4000);
   // page.click("#txt-cta-center-modal-close-icon") //Close pop-up
   // await delay(4000);
    return page;
@@ -101,16 +102,20 @@ export default async function kamernetScrapper(headless){
   // Get descriptions
   let fetchedText = [];
   for(let index = 0; index <= roomLinks.length; index++) {
-    let info = await getRoomInfo(roomLinks[index], page)
-    // let added = await getDiv(roomLinks[index], '.published-date', page);
-    if(info){
-      fetchedText.push({
-        desc: info.desc,
-        link: roomLinks[index],
-        price: info.price,
-        size: info.size,
-        added: info.added
-      })
+    if(roomLinks[index]){
+      let info = await getRoomInfo(roomLinks[index], page)
+      // let added = await getDiv(roomLinks[index], '.published-date', page);
+      if(info){
+        fetchedText.push({
+          desc: info.desc,
+          link: roomLinks[index],
+          price: info.price,
+          size: info.size,
+          added: info.added
+        })
+      }
+    } else{
+      console.log("URL undefined for room");
     }
     await delay(function(){}, 300);
   }
