@@ -13,3 +13,5 @@ General
 - use AWS lambda
 - If it fails it shouldn't add them to the file
 - Adding to the file should happen after the email is sent
+- Put onto a larger EC2 Instance the current one is not large enough
+- Error "Waiting for target frame" switch to debian migrate to a larger instance ! 
