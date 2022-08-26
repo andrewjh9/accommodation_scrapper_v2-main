@@ -7,6 +7,7 @@ import dotenv from "dotenv";
 dotenv.config()
 // 0    0/5  10-20 * * ? 
 const headless = true;
+
 schedule.scheduleJob("0 0/10 10-22 * * ?", async function() {
     job();
 });

@@ -6,6 +6,7 @@ import {delay} from './helper.mjs';
 
 const ROOFZPROPERTIESJSONPATH = "roofzProperties.json";
 const ROOFPROPERTIESURL = 'https://www.roofz.eu/availability';
+const CITYFILTER = "Amsterdam";
 var global = this;
 // Roofz Scraper checks if roofz has a new listing
 /*
@@ -56,7 +57,9 @@ async function getListings(page, listingLinks){
     for (const listingLink of listingLinks) {
         await page.goto(ROOFPROPERTIESURL+`/${listingLink}`);
         let listing = await getListing(page, listingLink);
-        listings.push(listing);
+        if(listing.fullAddress.toLowerCase().includes(CITYFILTER.toLowerCase())){
+            listings.push(listing);
+        }
         await delay(4000);
     }
     return listings;
@@ -66,11 +69,13 @@ async function getListing(page, listingLink){
     return await page.evaluate((ROOFPROPERTIESURL, listingLink) =>{
         if(document.querySelectorAll('.project-summary')[0]){
             let publishDate = document.querySelectorAll('.project-summary')[0].innerText.split('Publish date ')[1];
+            let fullAddress = document.querySelectorAll('.header__text-location')[0].innerText;
             let url = `${ROOFPROPERTIESURL}/${listingLink}`;
             let address = listingLink;
             return  {
                 key: address+"%"+publishDate,
                 address: address,
+                fullAddress: fullAddress,
                 url: url,
                 publishDate: publishDate
             };
