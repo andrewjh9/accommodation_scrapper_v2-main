@@ -1,12 +1,12 @@
 ROOFZ
-- Check the property is in Amsterdam
 
 Holland2Stay
 - Add holland to stay alerts
 
 Kamernet
-- Add more fine grained filtering, checking for age
+<!-- - Add more fine grained filtering, checking for age -->
 - Can still fail silently, ensure that any error trips the top level error message
+- Improve efficency of search to allow for checking more often
 
 General 
 - Create a Linux service that runs node replacing the forever package which is breaking things
@@ -15,3 +15,4 @@ General
 - Adding to the file should happen after the email is sent
 - Put onto a larger EC2 Instance the current one is not large enough
 - Error "Waiting for target frame" switch to debian migrate to a larger instance ! 
+- Setup AWS cloudwatch monitoring, cra
