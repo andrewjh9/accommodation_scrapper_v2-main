@@ -44,8 +44,8 @@ async function filterPage(page){
    await delay(400);
    page.click("#roomDetails") // Open details
    await delay(400);
-  //  page.click('#lbl_RoomTypeId_1'); // Filter rooms
-  //  await delay(800);
+   page.click('#lbl_RoomTypeId_4'); // Filter rooms
+   await delay(400);
   // Fail point is in here
    page.click("#suitableRoom") // Open sub menus
    await delay(400);
@@ -59,15 +59,9 @@ async function filterPage(page){
   await delay(400);
   console.log("Age filtered ");
 
-
-  // page.click("#generalRoom")
-  // await delay(400);
-  // selector = 'input[name="OwnerTypeId"]';
-  // await page.evaluate((selector) => document.querySelector(selector).click(), selector); //Filter for ad by roommate
-  // await delay(400);
-  // page.click("#txt-cta-center-modal-close-icon") //Close pop-up
-  // await delay(4000);
-   return page;
+  page.click("#search-filter-total-results") //Set filter
+  await delay(400);
+  return page;
 }
 
 

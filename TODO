@@ -6,7 +6,10 @@ Holland2Stay
 Kamernet
 <!-- - Add more fine grained filtering, checking for age -->
 - Can still fail silently, ensure that any error trips the top level error message
-- Improve efficency of search to allow for checking more often
+- Improve efficency of search to allow for checking more often: 
+
+Puppeeteer improvements: 
+- https://stackoverflow.com/questions/62516119/puppeteer-scrape-sometimes-works-sometimes-fails-with-typeerror
 
 General 
 - Create a Linux service that runs node replacing the forever package which is breaking things
